@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="project1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int32" Nullable="false" />
+    <Property Name="CategoryName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="clothes" Relationship="Self.FK__cloth__CategoryI__286302EC" FromRole="Category" ToRole="cloth" />
+    <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="cloth">
+    <Key>
+      <PropertyRef Name="ClothID" />
+    </Key>
+    <Property Name="ClothID" Type="Int32" Nullable="false" />
+    <Property Name="CategoryID" Type="Int32" />
+    <Property Name="MaterialID" Type="Int32" />
+    <Property Name="clothName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Category" Relationship="Self.FK__cloth__CategoryI__286302EC" FromRole="cloth" ToRole="Category" />
+    <NavigationProperty Name="Material" Relationship="Self.FK__cloth__MaterialI__2F10007B" FromRole="cloth" ToRole="Material" />
+    <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Material">
+    <Key>
+      <PropertyRef Name="MaterialID" />
+    </Key>
+    <Property Name="MaterialID" Type="Int32" Nullable="false" />
+    <Property Name="MaterialName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="clothes" Relationship="Self.FK__cloth__MaterialI__2F10007B" FromRole="Material" ToRole="cloth" />
+    <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="emailid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ph_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK__cloth__CategoryI__286302EC">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="cloth" Type="Self.cloth" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="cloth">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__cloth__MaterialI__2F10007B">
+    <End Role="Material" Type="Self.Material" Multiplicity="0..1" />
+    <End Role="cloth" Type="Self.cloth" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Material">
+        <PropertyRef Name="MaterialID" />
+      </Principal>
+      <Dependent Role="cloth">
+        <PropertyRef Name="MaterialID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="project1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="clothes" EntityType="Self.cloth" />
+    <EntitySet Name="Materials" EntityType="Self.Material" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__cloth__CategoryI__286302EC" Association="Self.FK__cloth__CategoryI__286302EC">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="cloth" EntitySet="clothes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__cloth__MaterialI__2F10007B" Association="Self.FK__cloth__MaterialI__2F10007B">
+      <End Role="Material" EntitySet="Materials" />
+      <End Role="cloth" EntitySet="clothes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
